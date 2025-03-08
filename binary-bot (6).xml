@@ -1,7 +1,7 @@
 <xml xmlns="http://www.w3.org/1999/xhtml" collection="false">
   <variables>
     <variable type="" id="%1TqIxQNYO?vQrB+46+R">Stake</variable>
-    <variable type="" id="pA.}PCp0D=NRkq}}OGx%">RSI level</variable>
+    <variable type="" id="pA.}PCp0D=NRkq}}OGx%">over level</variable>
   </variables>
   <block type="trade" id="xgH69|xFn9=70w.*3Vo@" x="-56" y="-44">
     <field name="MARKET_LIST">synthetic_index</field>
@@ -93,17 +93,17 @@
       </block>
     </statement>
   </block>
-  <block type="before_purchase" id="i-CIx.(Onm4?ihxzA}Y]" x="730" y="242">
+  <block type="before_purchase" id="i-CIx.(Onm4?ihxzA}Y]" x="730" y="878">
     <statement name="BEFOREPURCHASE_STACK">
       <block type="variables_set" id="PG=M.=a{1JtS=Ll:yD`h">
         <field name="VAR" id="pA.}PCp0D=NRkq}}OGx%" variabletype="">RSI level</field>
         <value name="VALUE">
-          <block type="rsi" id="6drJZ?rwp0Et`8BcVCy$">
+          <block type="rsi" id="6drJZ?rwp0Et`6BcVCy$">
             <value name="INPUT">
               <block type="ticks" id="3(R3w}h*H6!V]1^3rt3q"></block>
             </value>
             <value name="PERIOD">
-              <shadow type="math_number" id="P6#(,1+D@j?E+;Tjwk3p">
+              <shadow type="math_number" id="P7#(,1+D@j?E+;Tjwk3p">
                 <field name="NUM">5</field>
               </shadow>
             </value>
