@@ -1,0 +1,122 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <variables>
+    <variable id="stake">stake</variable>
+    <variable id="runs">runs</variable>
+    <variable id="profit">profit</variable>
+  </variables>
+
+  <block type="trade" x="0" y="0">
+    <field name="SYMBOL_LIST">R_100</field>
+    <field name="TRADETYPE_LIST">DIGITOVER</field>
+
+    <statement name="INITIALIZATION">
+      <block type="variables_set">
+        <field name="VAR">stake</field>
+        <value name="VALUE"><block type="math_number"><field name="NUM">20</field></block></value>
+      </block>
+      <next>
+        <block type="variables_set">
+          <field name="VAR">runs</field>
+          <value name="VALUE"><block type="math_number"><field name="NUM">0</field></block></value>
+        </block>
+      </next>
+    </statement>
+
+    <statement name="SUBMARKET">
+      <block type="tradeOptions">
+        <value name="AMOUNT">
+          <block type="variables_get"><field name="VAR">stake</field></block>
+        </value>
+        <value name="PREDICTION">
+          <block type="math_number"><field name="NUM">9</field></block>
+        </value>
+      </block>
+    </statement>
+  </block>
+
+  <block type="before_purchase" x="0" y="200">
+    <statement name="BEFOREPURCHASE_STACK">
+      <block type="controls_if">
+        <value name="IF0">
+          <block type="logic_compare">
+            <field name="OP">EQ</field>
+            <value name="A"><block type="last_digit"></block></value>
+            <value name="B"><block type="math_number"><field name="NUM">9</field></block></value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="purchase">
+            <field name="PURCHASE_LIST">DIGITOVER</field>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+
+  <block type="after_purchase" x="0" y="400">
+    <statement name="AFTERPURCHASE_STACK">
+      <block type="controls_if">
+        
+        <!-- STOP CONDITIONS -->
+        <value name="IF0">
+          <block type="logic_operation">
+            <field name="OP">OR</field>
+            <value name="A">
+              <block type="logic_compare">
+                <field name="OP">GTE</field>
+                <value name="A"><block type="total_profit"></block></value>
+                <value name="B"><block type="math_number"><field name="NUM">3</field></block></value>
+              </block>
+            </value>
+            <value name="B">
+              <block type="logic_compare">
+                <field name="OP">LTE</field>
+                <value name="A"><block type="total_profit"></block></value>
+                <value name="B"><block type="math_number"><field name="NUM">-5</field></block></value>
+              </block>
+            </value>
+          </block>
+        </value>
+
+        <statement name="DO0">
+          <block type="notify">
+            <field name="NOTIFICATION_TYPE">success</field>
+            <value name="MESSAGE">
+              <block type="text"><field name="TEXT">Target reached / Stop hit</field></block>
+            </value>
+          </block>
+        </statement>
+
+        <!-- ELSE continue -->
+        <statement name="ELSE">
+          <block type="variables_set">
+            <field name="VAR">runs</field>
+            <value name="VALUE">
+              <block type="math_arithmetic">
+                <field name="OP">ADD</field>
+                <value name="A"><block type="variables_get"><field name="VAR">runs</field></block></value>
+                <value name="B"><block type="math_number"><field name="NUM">1</field></block></value>
+              </block>
+            </value>
+          </block>
+
+          <next>
+            <block type="controls_if">
+              <value name="IF0">
+                <block type="logic_compare">
+                  <field name="OP">LT</field>
+                  <value name="A"><block type="variables_get"><field name="VAR">runs</field></block></value>
+                  <value name="B"><block type="math_number"><field name="NUM">5</field></block></value>
+                </block>
+              </value>
+              <statement name="DO0">
+                <block type="trade_again"></block>
+              </statement>
+            </block>
+          </next>
+
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>
